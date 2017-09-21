@@ -174,7 +174,36 @@ public class ContactRepositoryImpl implements ContactRepository {
     }
 
     @Override
+    public Observable<ContactModel> createNewContact(CreateUpdateContactRequest request) {
+
+        Observable<ContactResponse> contactObservable = apiService.addContact(request);
+
+        return contactObservable.concatMap(contactResponse -> {
+            ContactModel result = Utils.mapContactResponseToModel(contactResponse);
+
+            // save contact to device database
+            this.addContactToDatabase(contactResponse);
+
+            List<ContactModel> lcon = new ArrayList<>();
+            lcon.add(result);
+            return Observable.from(lcon);
+        });
+    }
+
+    @Override
     public Observable<ContactModel> updateContactDetail(CreateUpdateContactRequest request, int contactId) {
-        return null;
+
+        Observable<ContactResponse> contactObservable = apiService.editContact(contactId, request);
+
+        return contactObservable.concatMap(contactResponse -> {
+            ContactModel result = Utils.mapContactResponseToModel(contactResponse);
+
+            // save contact to device database
+            this.addContactToDatabase(contactResponse);
+
+            List<ContactModel> lcon = new ArrayList<>();
+            lcon.add(result);
+            return Observable.from(lcon);
+        });
     }
 }

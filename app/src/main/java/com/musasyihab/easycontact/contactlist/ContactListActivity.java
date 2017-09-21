@@ -14,6 +14,7 @@ import com.musasyihab.easycontact.BaseActivity;
 import com.musasyihab.easycontact.R;
 import com.musasyihab.easycontact.adapter.ContactListAdapter;
 import com.musasyihab.easycontact.contactdetail.ContactDetailActivity;
+import com.musasyihab.easycontact.contactform.ContactFormActivity;
 import com.musasyihab.easycontact.data.model.ContactModel;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ContactListActivity extends BaseActivity implements ContactListActivityVP.View, ContactListAdapter.ContactListListener {
 
@@ -101,7 +103,8 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
     @Override
     protected void onPause() {
         super.onPause();
-        scrollPosition = ((LinearLayoutManager) mContactListView.getLayoutManager()).findFirstVisibleItemPosition();
+        if(mContactListView != null)
+            scrollPosition = ((LinearLayoutManager) mContactListView.getLayoutManager()).findFirstVisibleItemPosition();
     }
 
     @Override
@@ -138,5 +141,11 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
         Intent detailIntent = new Intent(this, ContactDetailActivity.class);
         detailIntent.putExtra(ContactDetailActivity.CONTACT_ID, clickedItem.getId());
         startActivity(detailIntent);
+    }
+
+    @OnClick(R.id.contact_list_add_fab)
+    public void onAddClick(){
+        Intent formIntent = new Intent(this, ContactFormActivity.class);
+        startActivity(formIntent);
     }
 }

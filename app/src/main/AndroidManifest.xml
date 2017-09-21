@@ -29,6 +29,11 @@
                 android:value=".contactlist.ContactListActivity"/>
         </activity>
 
+        <activity
+            android:name=".contactform.ContactFormActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden"/>
+
     </application>
 
 </manifest>

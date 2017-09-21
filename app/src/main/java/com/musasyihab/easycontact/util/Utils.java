@@ -4,10 +4,11 @@ import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.network.response.ContactResponse;
 import com.musasyihab.easycontact.network.response.ContactSimpleResponse;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by musasyihab on 9/16/17.
@@ -50,5 +51,18 @@ public class Utils {
             e.printStackTrace();
         }
         return formatDate;
+    }
+
+    public static boolean isEmailFormatCorrect(String email){
+        if (email == null) {
+            return false;
+        }
+        Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+        Matcher m = p.matcher(email);
+
+        if(!m.matches()){
+            return false;
+        }
+        return true;
     }
 }

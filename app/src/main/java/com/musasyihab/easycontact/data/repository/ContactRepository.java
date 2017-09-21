@@ -27,6 +27,8 @@ public interface ContactRepository {
 
     Observable<List<ContactModel>> getAllContactsFromDatabase();
 
+    Observable<ContactModel> createNewContact(CreateUpdateContactRequest request);
+
     Observable<ContactModel> updateContactFavorite(ContactModel contact, int contactId);
 
     Observable<ContactModel> updateContactDetail(CreateUpdateContactRequest request, int contactId);
