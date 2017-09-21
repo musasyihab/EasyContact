@@ -18,7 +18,6 @@ public class ContactListPresenter implements ContactListActivityVP.Presenter {
 
     private ContactRepository contactRepository;
     private ContactListActivityVP.View view;
-    private List<ContactModel> contactList;
 
     @Inject
     public ContactListPresenter(ContactRepository contactRepository) {
@@ -34,8 +33,7 @@ public class ContactListPresenter implements ContactListActivityVP.Presenter {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(contacts -> {
-                        contactList = contacts;
-                        for (ContactModel contact : contactList) {
+                        for (ContactModel contact : contacts) {
                             view.updateData(contact);
                         }
                     }, throwable -> {
@@ -45,8 +43,7 @@ public class ContactListPresenter implements ContactListActivityVP.Presenter {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(contacts -> {
-                            contactList = contacts;
-                            for (ContactModel contact: contactList){
+                            for (ContactModel contact: contacts){
                                 view.updateData(contact);
                             }
                         }, throwable1 -> {
