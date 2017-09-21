@@ -3,7 +3,6 @@ package com.musasyihab.easycontact.contactlist;
 import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.data.repository.ContactRepository;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -25,7 +24,7 @@ public class ContactListPresenter implements ContactListActivityVP.Presenter {
     }
 
     @Override
-    public void loadData() {
+    public void fetchData() {
         if (view != null) {
             view.showLoading();
 
@@ -38,18 +37,27 @@ public class ContactListPresenter implements ContactListActivityVP.Presenter {
                         }
                     }, throwable -> {
                         throwable.printStackTrace();
-                view.showSnackbar(throwable.getMessage());
-                contactRepository.getAllContactsFromDatabase()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(contacts -> {
-                            for (ContactModel contact: contacts){
-                                view.updateData(contact);
-                            }
-                        }, throwable1 -> {
-                            throwable1.printStackTrace();
+                        view.showSnackbar(throwable.getMessage());
+                        loadLocalData();
+                    }, () -> view.hideLoading());
+        }
+    }
+
+    @Override
+    public void loadLocalData() {
+        if (view != null) {
+            view.showLoading();
+
+            contactRepository.getAllContactsFromDatabase()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(contacts -> {
+                        for (ContactModel contact: contacts){
+                            view.updateData(contact);
+                        }
+                    }, throwable1 -> {
+                        throwable1.printStackTrace();
                         view.hideLoading();
-                        }, () -> view.hideLoading());
                     }, () -> view.hideLoading());
         }
     }
@@ -62,6 +70,5 @@ public class ContactListPresenter implements ContactListActivityVP.Presenter {
     @Override
     public void setView(ContactListActivityVP.View view) {
         this.view = view;
-        loadData();
     }
 }

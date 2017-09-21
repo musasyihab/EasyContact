@@ -1,6 +1,7 @@
 package com.musasyihab.easycontact.data.repository;
 
 import com.musasyihab.easycontact.data.model.ContactModel;
+import com.musasyihab.easycontact.network.request.CreateUpdateContactRequest;
 import com.musasyihab.easycontact.network.response.ContactResponse;
 import com.musasyihab.easycontact.network.response.ContactSimpleResponse;
 
@@ -25,6 +26,10 @@ public interface ContactRepository {
     Observable<List<ContactModel>> getAllContactsFromNetwork();
 
     Observable<List<ContactModel>> getAllContactsFromDatabase();
+
+    Observable<ContactModel> updateContactFavorite(ContactModel contact, int contactId);
+
+    Observable<ContactModel> updateContactDetail(CreateUpdateContactRequest request, int contactId);
 
     void deleteContact(int id);
 

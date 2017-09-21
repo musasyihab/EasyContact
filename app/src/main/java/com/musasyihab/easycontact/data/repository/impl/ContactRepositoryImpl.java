@@ -6,6 +6,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.data.repository.ContactRepository;
 import com.musasyihab.easycontact.network.ApiService;
+import com.musasyihab.easycontact.network.request.CreateUpdateContactRequest;
 import com.musasyihab.easycontact.network.response.ContactResponse;
 import com.musasyihab.easycontact.network.response.ContactSimpleResponse;
 import com.musasyihab.easycontact.util.ContactSortComparator;
@@ -144,5 +145,34 @@ public class ContactRepositoryImpl implements ContactRepository {
             lcon.add(contacts);
             return Observable.from(lcon);
         });
+    }
+
+    @Override
+    public Observable<ContactModel> updateContactFavorite(ContactModel contact, int contactId) {
+
+        CreateUpdateContactRequest request = new CreateUpdateContactRequest();
+        request.setFirst_name(contact.getFirstName());
+        request.setLast_name(contact.getLastName());
+        request.setPhone_number(contact.getPhoneNumber());
+        request.setEmail(contact.getEmail());
+        request.setFavorite(!contact.isFavorite());
+
+        Observable<ContactResponse> contactObservable = apiService.editContact(contactId, request);
+
+        return contactObservable.concatMap(contactResponse -> {
+            ContactModel result = Utils.mapContactResponseToModel(contactResponse);
+
+            // save contact to device database
+            this.addContactToDatabase(contactResponse);
+
+            List<ContactModel> lcon = new ArrayList<>();
+            lcon.add(result);
+            return Observable.from(lcon);
+        });
+    }
+
+    @Override
+    public Observable<ContactModel> updateContactDetail(CreateUpdateContactRequest request, int contactId) {
+        return null;
     }
 }

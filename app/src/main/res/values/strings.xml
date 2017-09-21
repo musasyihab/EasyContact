@@ -6,4 +6,9 @@
 
     <string name="phone">Phone Number</string>
     <string name="email">Email Address</string>
+
+    <string name="edit">Edit</string>
+    <string name="favorite">Favorite</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
 </resources>

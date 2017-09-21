@@ -22,7 +22,9 @@ public class ContactListActivityVP {
 
     interface Presenter {
 
-        void loadData();
+        void fetchData();
+
+        void loadLocalData();
 
         void unsubscribe();
 

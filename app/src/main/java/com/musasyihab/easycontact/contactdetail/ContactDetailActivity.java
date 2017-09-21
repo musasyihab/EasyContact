@@ -1,10 +1,16 @@
 package com.musasyihab.easycontact.contactdetail;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.ActionBar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +65,10 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
     @BindView(R.id.contact_detail_email_main_layout)
     LinearLayout mEmailMainLayout;
 
+    private ActionBar mActionBar;
+    private MenuItem mFavoriteMenu;
+    private ProgressDialog mLoadingDialog;
+
     private ContactModel mContact;
     private int mContactId = -1;
 
@@ -111,6 +121,8 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
 
             mLayout.setVisibility(View.VISIBLE);
             mContactDetailEmpty.setVisibility(View.GONE);
+
+            updateFavoriteMenuIcon();
         } else {
             mLayout.setVisibility(View.GONE);
             mContactDetailEmpty.setVisibility(View.VISIBLE);
@@ -140,6 +152,53 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contact_detail_menu, menu);
+        mFavoriteMenu = menu.findItem(R.id.action_contact_favorite);
+        return true;
+    }
+
+    private void updateFavoriteMenuIcon(){
+        if(mFavoriteMenu!=null){
+            if(mContact!=null && mContact.isFavorite()) {
+                mFavoriteMenu.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_star_on_white, null));
+            }
+            else {
+                mFavoriteMenu.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_star_off_white, null));
+            }
+        }
+    }
+
+    private void updateContactFavorite(){
+        if(presenter!=null)
+            presenter.updateFavorite(mContact, mContactId);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.action_contact_edit:
+                // open edit contact activity
+                break;
+            case R.id.action_contact_favorite:
+                // update contact favorite status
+                updateContactFavorite();
+                break;
+            case R.id.action_contact_share:
+                // share contact
+                break;
+            case R.id.action_contact_delete:
+                // delete contact
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void showLoading() {
         mLayout.setVisibility(View.GONE);
         mContactDetailEmpty.setVisibility(View.GONE);
@@ -150,6 +209,24 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
     public void hideLoading() {
         loadContactToView();
         mContactDetailLoading.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        if(mLoadingDialog==null) {
+            mLoadingDialog = ProgressDialog.show(this, "",
+                    "Please wait...", true);
+        }
+        if(!mLoadingDialog.isShowing())
+            mLoadingDialog.show();
+
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        if(mLoadingDialog != null && mLoadingDialog.isShowing())
+            mLoadingDialog.dismiss();
+        updateFavoriteMenuIcon();
     }
 
     @Override

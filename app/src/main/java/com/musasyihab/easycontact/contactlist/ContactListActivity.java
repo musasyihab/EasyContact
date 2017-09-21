@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.musasyihab.easycontact.BaseActivity;
 import com.musasyihab.easycontact.R;
 import com.musasyihab.easycontact.adapter.ContactListAdapter;
@@ -28,8 +26,7 @@ import butterknife.ButterKnife;
 
 public class ContactListActivity extends BaseActivity implements ContactListActivityVP.View, ContactListAdapter.ContactListListener {
 
-    private static final String CONTACT_LIST = "CONTACT_LIST";
-    private static final String CONTACT_ID_LIST = "CONTACT_ID_LIST";
+    private static final String SCROLL_POSITION = "SCROLL_POSITION";
 
     @Inject
     ContactListPresenter presenter;
@@ -44,8 +41,9 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
     ProgressBar mContactListLoading;
 
     private List<ContactModel> mContactList = new ArrayList<>();
-    private List<Integer> mContactIDList = new ArrayList<>();
     private ContactListAdapter mAdapter;
+    private int scrollPosition = 0;
+    private boolean dataFetched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +55,8 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
         ButterKnife.bind(this);
 
         if (savedInstanceState!=null){
-            if(savedInstanceState.containsKey(CONTACT_LIST)){
-                String sContacts = savedInstanceState.getString(CONTACT_LIST);
-                mContactList = new Gson().fromJson(sContacts,
-                        new TypeToken<List<ContactModel>>() {}.getType());
-                loadContactToView();
-            }
-            if(savedInstanceState.containsKey(CONTACT_ID_LIST)){
-                String sContactIds = savedInstanceState.getString(CONTACT_ID_LIST);
-                mContactIDList = new Gson().fromJson(sContactIds,
-                        new TypeToken<List<ContactModel>>() {}.getType());
+            if(savedInstanceState.containsKey(SCROLL_POSITION)){
+                scrollPosition = savedInstanceState.getInt(SCROLL_POSITION);
             }
         }
 
@@ -78,6 +68,7 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
             mContactListView.setHasFixedSize(true);
             mContactListView.setLayoutManager(new LinearLayoutManager(this));
             mContactListView.setAdapter(mAdapter);
+            mContactListView.scrollToPosition(scrollPosition);
 
             mContactListView.setVisibility(View.VISIBLE);
             mContactListEmpty.setVisibility(View.GONE);
@@ -90,8 +81,14 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
     @Override
     protected void onStart() {
         super.onStart();
-        if(mContactList.size()==0 && mContactIDList.size()==0) {
+        if(!dataFetched) {
             presenter.setView(this);
+            mContactList = new ArrayList<>();
+            presenter.fetchData();
+            dataFetched = true;
+        } else {
+            mContactList = new ArrayList<>();
+            presenter.loadLocalData();
         }
     }
 
@@ -102,11 +99,14 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        scrollPosition = ((LinearLayoutManager) mContactListView.getLayoutManager()).findFirstVisibleItemPosition();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
-        String contactList = new Gson().toJson(mContactList);
-        String contactIdList = new Gson().toJson(mContactIDList);
-        outState.putString(CONTACT_LIST, contactList);
-        outState.putString(CONTACT_ID_LIST, contactIdList);
+        outState.putInt(SCROLL_POSITION, scrollPosition);
         super.onSaveInstanceState(outState);
     }
 
@@ -125,10 +125,7 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
 
     @Override
     public void updateData(ContactModel contact) {
-        if(!mContactIDList.contains(contact.getId())) {
-            mContactIDList.add(contact.getId());
-            mContactList.add(contact);
-        }
+        mContactList.add(contact);
     }
 
     @Override

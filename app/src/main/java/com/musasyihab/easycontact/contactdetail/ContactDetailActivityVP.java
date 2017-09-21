@@ -14,6 +14,10 @@ public class ContactDetailActivityVP {
 
         void hideLoading();
 
+        void showLoadingDialog();
+
+        void hideLoadingDialog();
+
         void updateData(ContactModel contact);
 
         void showSnackbar(String msg);
@@ -23,6 +27,8 @@ public class ContactDetailActivityVP {
     interface Presenter {
 
         void loadData(int contactId);
+
+        void updateFavorite(ContactModel contact, int contactId);
 
         void unsubscribe();
 
