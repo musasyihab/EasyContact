@@ -61,7 +61,27 @@ public class ContactDetailPresenter implements ContactDetailActivityVP.Presenter
                     }, throwable -> {
                         throwable.printStackTrace();
                         view.showSnackbar(throwable.getMessage());
+                        view.hideLoadingDialog();
                     }, () -> view.hideLoadingDialog());
+        }
+    }
+
+    @Override
+    public void deleteContact(int contactId) {
+        if (view != null) {
+            view.showLoadingDialog();
+
+            contactRepository.deleteContact(contactId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> {}, throwable -> {
+                        throwable.printStackTrace();
+                        view.showSnackbar(throwable.getMessage());
+                        view.hideLoadingDialog();
+                    }, () -> {
+                        view.hideLoadingDialog();
+                        view.finishActivity();
+                    });
         }
     }
 

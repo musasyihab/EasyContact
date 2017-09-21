@@ -31,7 +31,7 @@ public interface ContactRepository {
 
     Observable<ContactModel> updateContactDetail(CreateUpdateContactRequest request, int contactId);
 
-    void deleteContact(int id);
+    Observable<Void> deleteContact(int id);
 
     boolean checkContactExist(int id);
 

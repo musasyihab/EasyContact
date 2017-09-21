@@ -33,6 +33,6 @@ public interface ApiService {
     Observable<ContactResponse> editContact(@Path("id") int id, @Body CreateUpdateContactRequest request);
 
     @DELETE("/contacts/{id}.json")
-    Observable<ContactResponse> deleteContact(@Path("id") int id);
+    Observable<Void> deleteContact(@Path("id") int id);
 
 }

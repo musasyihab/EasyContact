@@ -22,6 +22,8 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -69,8 +71,8 @@ public class ContactRepositoryImpl implements ContactRepository {
     }
 
     @Override
-    public void deleteContact(int id) {
-        contactDao.deleteById(id);
+    public Observable<Void> deleteContact(int id) {
+        return apiService.deleteContact(id).doOnCompleted(() -> contactDao.deleteById(id));
     }
 
     @Override

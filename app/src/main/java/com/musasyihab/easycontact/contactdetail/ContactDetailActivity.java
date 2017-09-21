@@ -1,6 +1,7 @@
 package com.musasyihab.easycontact.contactdetail;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -175,6 +177,16 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
             presenter.updateFavorite(mContact, mContactId);
     }
 
+    private void deleteContact(){
+        new AlertDialog.Builder(this)
+            .setTitle("Delete Contact")
+            .setMessage("Are you sure want to delete this contact?")
+            .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                presenter.deleteContact(mContactId);
+            })
+            .setNegativeButton(android.R.string.no, null).show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -192,6 +204,7 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
                 break;
             case R.id.action_contact_delete:
                 // delete contact
+                deleteContact();
                 break;
         }
 
@@ -227,6 +240,11 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
         if(mLoadingDialog != null && mLoadingDialog.isShowing())
             mLoadingDialog.dismiss();
         updateFavoriteMenuIcon();
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
     }
 
     @Override
