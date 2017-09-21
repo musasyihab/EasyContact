@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contact_list_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.musasyihab.easycontact.ContactListActivity">
+    android:orientation="vertical"
+    tools:context="com.musasyihab.easycontact.contactlist.ContactListActivity">
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/contact_list_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            android:id="@+id/contact_list_loading"
+            android:layout_width="@dimen/progressbar_width"
+            android:layout_height="@dimen/progressbar_height"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/contact_list_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/contact_list_empty"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/contact_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_add_white"
+        app:fabSize="normal"
+        app:layout_anchor="@id/contact_list_frame"
+        app:layout_anchorGravity="bottom|right|end" />
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

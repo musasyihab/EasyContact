@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EasyContact</string>
+
+    <string name="contact_list_empty">No contacts found.</string>
 </resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contact_item_layout"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/small_padding"
+    android:paddingBottom="@dimen/small_padding"
+    android:paddingLeft="@dimen/medium_padding"
+    android:paddingRight="@dimen/medium_padding"
+    android:gravity="center_vertical">
+
+    <FrameLayout
+        android:id="@+id/contact_item_label_layout"
+        android:layout_width="@dimen/icon_small_size"
+        android:layout_height="@dimen/icon_small_size"
+        android:layout_marginRight="@dimen/extra_large_margin">
+
+        <ImageView
+            android:id="@+id/contact_item_label_star"
+            android:layout_width="@dimen/icon_extra_small_size"
+            android:layout_height="@dimen/icon_extra_small_size"
+            android:src="@drawable/ic_star"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/contact_item_label_initial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="A"
+            android:textSize="@dimen/text_large_size"
+            android:textAllCaps="true"
+            android:maxLength="1"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/contact_item_ava_layout"
+        android:layout_width="@dimen/icon_medium_size"
+        android:layout_height="@dimen/icon_medium_size"
+        android:layout_marginRight="@dimen/small_margin">
+
+        <TextView
+            android:id="@+id/contact_item_ava_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_circle_green"
+            tools:text="A"
+            android:textSize="@dimen/text_medium_size"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:maxLength="1"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/contact_item_ava_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_circle_green"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/contact_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="John Doe"
+        android:textSize="@dimen/text_small_size"/>
+
+</LinearLayout>
