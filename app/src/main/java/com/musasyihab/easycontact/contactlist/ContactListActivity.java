@@ -1,5 +1,6 @@
 package com.musasyihab.easycontact.contactlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -8,13 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.musasyihab.easycontact.BaseActivity;
 import com.musasyihab.easycontact.R;
 import com.musasyihab.easycontact.adapter.ContactListAdapter;
+import com.musasyihab.easycontact.contactdetail.ContactDetailActivity;
 import com.musasyihab.easycontact.data.model.ContactModel;
 
 import java.util.ArrayList;
@@ -137,6 +138,8 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
 
     @Override
     public void onContactClick(ContactModel clickedItem) {
-        Toast.makeText(this, "Click on contact id: "+clickedItem.getId(), Toast.LENGTH_SHORT).show();
+        Intent detailIntent = new Intent(this, ContactDetailActivity.class);
+        detailIntent.putExtra(ContactDetailActivity.CONTACT_ID, clickedItem.getId());
+        startActivity(detailIntent);
     }
 }

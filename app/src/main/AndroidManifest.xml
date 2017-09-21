@@ -19,6 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".contactdetail.ContactDetailActivity"
+            android:parentActivityName=".contactlist.ContactListActivity"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".contactlist.ContactListActivity"/>
+        </activity>
+
     </application>
 
 </manifest>

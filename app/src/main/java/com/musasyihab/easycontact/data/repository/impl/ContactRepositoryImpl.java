@@ -42,7 +42,7 @@ public class ContactRepositoryImpl implements ContactRepository {
     }
 
     public void upsertContactToDatabase(ContactModel contact){
-        contactDao.create(contact);
+        contactDao.createOrUpdate(contact);
     }
 
     @Override
@@ -73,7 +73,24 @@ public class ContactRepositoryImpl implements ContactRepository {
     }
 
     @Override
-    public Observable<ContactModel> getContactById(int id) {
+    public Observable<ContactModel> getContactDetailFromNetwork(int id) {
+
+        Observable<ContactResponse> contactObservable = apiService.getContactById(id);
+
+        return contactObservable.concatMap(contactResponse -> {
+            ContactModel contact = Utils.mapContactResponseToModel(contactResponse);
+
+            // save contact to device database
+            this.addContactToDatabase(contactResponse);
+
+            List<ContactModel> lcon = new ArrayList<>();
+            lcon.add(contact);
+            return Observable.from(lcon);
+        });
+    }
+
+    @Override
+    public Observable<ContactModel> getContactDetailFromDatabase(int id) {
         Observable.OnSubscribe<ContactModel> onSubscribe = subscriber -> {
             try {
                 if (!subscriber.isUnsubscribed()) {

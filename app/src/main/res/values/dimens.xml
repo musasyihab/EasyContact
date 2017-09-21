@@ -2,6 +2,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="contact_detail_avatar_height">210dp</dimen>
+
     <dimen name="extra_small_padding">4dp</dimen>
     <dimen name="small_padding">8dp</dimen>
     <dimen name="medium_padding">16dp</dimen>
@@ -22,7 +24,8 @@
     <dimen name="icon_medium_size">40dp</dimen>
     <dimen name="icon_large_size">48dp</dimen>
 
-    <dimen name="text_small_size">14sp</dimen>
+    <dimen name="text_extra_small_size">14sp</dimen>
+    <dimen name="text_small_size">16sp</dimen>
     <dimen name="text_medium_size">20sp</dimen>
     <dimen name="text_large_size">24sp</dimen>
 

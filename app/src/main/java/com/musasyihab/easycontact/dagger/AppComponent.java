@@ -1,5 +1,6 @@
 package com.musasyihab.easycontact.dagger;
 
+import com.musasyihab.easycontact.contactdetail.ContactDetailActivity;
 import com.musasyihab.easycontact.contactlist.ContactListActivity;
 import com.musasyihab.easycontact.dagger.module.DBModule;
 import com.musasyihab.easycontact.dagger.module.ApplicationModule;
@@ -24,5 +25,6 @@ import dagger.Component;
 public interface AppComponent {
 
     void inject(ContactListActivity activity);
+    void inject(ContactDetailActivity activity);
 
 }

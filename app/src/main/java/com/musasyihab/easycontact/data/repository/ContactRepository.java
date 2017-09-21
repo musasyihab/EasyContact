@@ -18,7 +18,9 @@ public interface ContactRepository {
 
     void addContactToDatabase(ContactSimpleResponse response);
 
-    Observable<ContactModel> getContactById(int id);
+    Observable<ContactModel> getContactDetailFromNetwork(int id);
+
+    Observable<ContactModel> getContactDetailFromDatabase(int id);
 
     Observable<List<ContactModel>> getAllContactsFromNetwork();
 

@@ -42,13 +42,10 @@ public class Utils {
     }
 
     public static Date getDateFromAPI(String date) {
-        String formatted = "";
-        DateFormat formatter = new SimpleDateFormat(Constants.API_DATE_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(Constants.API_DATE_FORMAT);
         Date formatDate = new Date();
         try {
-            Date dateStr = formatter.parse(date);
-            formatted = formatter.format(dateStr);
-            formatDate = formatter.parse(formatted);
+            formatDate = formatter.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
