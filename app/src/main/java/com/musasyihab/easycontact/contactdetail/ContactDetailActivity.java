@@ -1,7 +1,6 @@
 package com.musasyihab.easycontact.contactdetail;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +25,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.musasyihab.easycontact.BaseActivity;
 import com.musasyihab.easycontact.R;
+import com.musasyihab.easycontact.contactform.ContactFormActivity;
 import com.musasyihab.easycontact.data.model.ContactModel;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -83,9 +85,7 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
 
         ButterKnife.bind(this);
 
-        if(getIntent().hasExtra(CONTACT_ID)){
-            mContactId = getIntent().getIntExtra(CONTACT_ID, -1);
-        }
+        mContactId = getIntent().getIntExtra(CONTACT_ID, -1);
 
         if (savedInstanceState!=null){
             if(savedInstanceState.containsKey(CONTACT_MODEL)){
@@ -103,8 +103,9 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
             mContactName.setText(mContact.getFullname());
             mContactPhone.setText(mContact.getPhoneNumber());
             mContactEmail.setText(mContact.getEmail());
+
             Glide.with(this)
-                    .load(mContact.getProfilePic())
+                    .load(mContact.getNormalizeProfilePic())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(mContactAvatar);
@@ -137,6 +138,8 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
         if(mContact == null) {
             presenter.setView(this);
             presenter.loadData(mContactId);
+        } else {
+            presenter.loadLocalData(mContactId);
         }
     }
 
@@ -194,6 +197,9 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
         switch (id){
             case R.id.action_contact_edit:
                 // open edit contact activity
+                Intent detailIntent = new Intent(this, ContactFormActivity.class);
+                detailIntent.putExtra(ContactFormActivity.CONTACT_ID, mContactId);
+                startActivity(detailIntent);
                 break;
             case R.id.action_contact_favorite:
                 // update contact favorite status

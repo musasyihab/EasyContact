@@ -30,6 +30,8 @@ public class ContactDetailActivityVP {
 
         void loadData(int contactId);
 
+        void loadLocalData(int contactId);
+
         void updateFavorite(ContactModel contact, int contactId);
 
         void deleteContact(int contactId);

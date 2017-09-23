@@ -49,6 +49,23 @@ public class ContactDetailPresenter implements ContactDetailActivityVP.Presenter
     }
 
     @Override
+    public void loadLocalData(int contactId) {
+        if (view != null) {
+            view.showLoading();
+
+            contactRepository.getContactDetailFromDatabase(contactId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(contact -> {
+                        view.updateData(contact);
+                    }, throwable -> {
+                        throwable.printStackTrace();
+                        view.hideLoading();
+                    }, () -> view.hideLoading());
+        }
+    }
+
+    @Override
     public void updateFavorite(ContactModel contact, int contactId) {
         if (view != null) {
             view.showLoadingDialog();
