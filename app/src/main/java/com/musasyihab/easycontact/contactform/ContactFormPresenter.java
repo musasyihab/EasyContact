@@ -1,8 +1,8 @@
 package com.musasyihab.easycontact.contactform;
 
-import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.data.repository.ContactRepository;
 import com.musasyihab.easycontact.network.request.CreateUpdateContactRequest;
+import com.musasyihab.easycontact.network.request.ImageUploadRequest;
 
 import javax.inject.Inject;
 
@@ -39,7 +39,7 @@ public class ContactFormPresenter implements ContactFormActivityVP.Presenter {
     @Override
     public void updateContact(CreateUpdateContactRequest request, int contactId) {
         if (view != null) {
-            view.showLoadingDialog();
+            view.showLoadingDialog(null);
 
             contactRepository.updateContactDetail(request, contactId)
                     .subscribeOn(Schedulers.io())
@@ -58,7 +58,7 @@ public class ContactFormPresenter implements ContactFormActivityVP.Presenter {
     @Override
     public void createContact(CreateUpdateContactRequest request) {
         if (view != null) {
-            view.showLoadingDialog();
+            view.showLoadingDialog(null);
 
             contactRepository.createNewContact(request)
                     .subscribeOn(Schedulers.io())
@@ -70,6 +70,26 @@ public class ContactFormPresenter implements ContactFormActivityVP.Presenter {
                     }, () -> {
                         view.hideLoadingDialog();
                         view.finishActivity();
+                    });
+        }
+    }
+
+    @Override
+    public void uploadImage(ImageUploadRequest request) {
+        if (view != null) {
+            view.showLoadingDialog("Uploading Image..");
+
+            contactRepository.uploadImage(request)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> view.setImageURL(result.getSecure_url()), throwable -> {
+                        throwable.printStackTrace();
+                        view.showSnackbar(throwable.getMessage());
+                        view.hideLoadingDialog();
+                        view.submitContact();
+                    }, () -> {
+                        view.hideLoadingDialog();
+                        view.submitContact();
                     });
         }
     }

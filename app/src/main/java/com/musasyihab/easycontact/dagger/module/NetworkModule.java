@@ -1,6 +1,7 @@
 package com.musasyihab.easycontact.dagger.module;
 
 import com.musasyihab.easycontact.network.ApiService;
+import com.musasyihab.easycontact.network.ImageApiService;
 import com.musasyihab.easycontact.util.Constants;
 
 import dagger.Module;
@@ -44,6 +45,11 @@ public class NetworkModule {
     @Provides
     public ApiService provideApiService() {
         return provideRetrofit(Constants.HOST_URL, provideClient()).create(ApiService.class);
+    }
+
+    @Provides
+    public ImageApiService provideImageApiService() {
+        return provideRetrofit(Constants.CLOUDINARY_HOST_URL, provideClient()).create(ImageApiService.class);
     }
 
 }

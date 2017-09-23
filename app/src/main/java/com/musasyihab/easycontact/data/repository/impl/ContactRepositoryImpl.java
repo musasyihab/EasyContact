@@ -6,9 +6,12 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.data.repository.ContactRepository;
 import com.musasyihab.easycontact.network.ApiService;
+import com.musasyihab.easycontact.network.ImageApiService;
 import com.musasyihab.easycontact.network.request.CreateUpdateContactRequest;
+import com.musasyihab.easycontact.network.request.ImageUploadRequest;
 import com.musasyihab.easycontact.network.response.ContactResponse;
 import com.musasyihab.easycontact.network.response.ContactSimpleResponse;
+import com.musasyihab.easycontact.network.response.ImageUploadResponse;
 import com.musasyihab.easycontact.util.ContactSortComparator;
 import com.musasyihab.easycontact.util.Utils;
 
@@ -22,8 +25,6 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -36,12 +37,15 @@ public class ContactRepositoryImpl implements ContactRepository {
     private Context context;
     private RuntimeExceptionDao<ContactModel, Integer> contactDao;
     private ApiService apiService;
+    private ImageApiService imageApiService;
 
     @Inject
-    public ContactRepositoryImpl(Context context, @Named("ContactDao") RuntimeExceptionDao<ContactModel, Integer> contactDao, ApiService apiService) {
+    public ContactRepositoryImpl(Context context, @Named("ContactDao") RuntimeExceptionDao<ContactModel, Integer> contactDao,
+                                 ApiService apiService, ImageApiService imageApiService) {
         this.context = context;
         this.contactDao = contactDao;
         this.apiService = apiService;
+        this.imageApiService = imageApiService;
     }
 
     public void upsertContactToDatabase(ContactModel contact){
@@ -206,4 +210,10 @@ public class ContactRepositoryImpl implements ContactRepository {
             return Observable.from(lcon);
         });
     }
+
+    @Override
+    public Observable<ImageUploadResponse> uploadImage(ImageUploadRequest request) {
+        return imageApiService.uploadImage(request);
+    }
+
 }

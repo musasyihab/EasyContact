@@ -2,6 +2,7 @@ package com.musasyihab.easycontact.data.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.musasyihab.easycontact.util.Utils;
 
 import java.util.Date;
 
@@ -117,6 +118,10 @@ public class ContactModel {
             return firstName + " " + lastName;
         }
         return firstName;
+    }
+
+    public String getNormalizeProfilePic(){
+        return Utils.normalizeAvatarUrl(profilePic);
     }
 }
 

@@ -3,6 +3,7 @@ package com.musasyihab.easycontact.contactform;
 import com.musasyihab.easycontact.contactdetail.ContactDetailActivityVP;
 import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.network.request.CreateUpdateContactRequest;
+import com.musasyihab.easycontact.network.request.ImageUploadRequest;
 
 /**
  * Created by musasyihab on 9/22/17.
@@ -12,7 +13,7 @@ public class ContactFormActivityVP {
 
     interface View {
 
-        void showLoadingDialog();
+        void showLoadingDialog(String msg);
 
         void hideLoadingDialog();
 
@@ -21,6 +22,10 @@ public class ContactFormActivityVP {
         void showSnackbar(String msg);
 
         void finishActivity();
+
+        void setImageURL(String url);
+
+        void submitContact();
 
     }
 
@@ -31,6 +36,8 @@ public class ContactFormActivityVP {
         void createContact(CreateUpdateContactRequest request);
 
         void updateContact(CreateUpdateContactRequest request, int contactId);
+
+        void uploadImage(ImageUploadRequest request);
 
         void unsubscribe();
 

@@ -7,6 +7,7 @@ import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.data.repository.ContactRepository;
 import com.musasyihab.easycontact.data.repository.impl.ContactRepositoryImpl;
 import com.musasyihab.easycontact.network.ApiService;
+import com.musasyihab.easycontact.network.ImageApiService;
 
 import javax.inject.Named;
 
@@ -21,8 +22,9 @@ import dagger.Provides;
 public class RepositoryModule {
 
     @Provides
-    ContactRepository provideContactRepository(Context context, @Named("ContactDao") RuntimeExceptionDao<ContactModel, Integer> contactDao, ApiService apiService) {
-        return new ContactRepositoryImpl(context, contactDao, apiService);
+    ContactRepository provideContactRepository(Context context, @Named("ContactDao") RuntimeExceptionDao<ContactModel, Integer> contactDao,
+                                               ApiService apiService, ImageApiService imageApiService) {
+        return new ContactRepositoryImpl(context, contactDao, apiService, imageApiService);
     }
 
 }

@@ -103,7 +103,7 @@ public class ContactListActivity extends BaseActivity implements ContactListActi
     @Override
     protected void onPause() {
         super.onPause();
-        if(mContactListView != null)
+        if(mContactListView != null && mContactListView.getLayoutManager() != null)
             scrollPosition = ((LinearLayoutManager) mContactListView.getLayoutManager()).findFirstVisibleItemPosition();
     }
 

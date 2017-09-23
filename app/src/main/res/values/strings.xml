@@ -14,4 +14,21 @@
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
+
+    <string name="please_wait">Loading. Please wait..</string>
+    <string name="saving_contact">Saving contact..</string>
+    <string name="uploading_image">Uploading image..</string>
+    <string name="saved_message">Image Saved at %1$s</string>
+    <string name="image_error">Error finding image</string>
+    <string name="access_camera_denied">Access camera permission denied.</string>
+    <string name="access_storage_denied">Access storage permission denied.</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="take_picture">Take picture</string>
+    <string name="choose_gallery">Choose from gallery</string>
+
+    <string name="firstname_required">First name is required</string>
+    <string name="lastname_required">Last name is required</string>
+    <string name="email_invalid">Incorrect email format</string>
+
+    <string name="internal_storage">Internal storage</string>
 </resources>

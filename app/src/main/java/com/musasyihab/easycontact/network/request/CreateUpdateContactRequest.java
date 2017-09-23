@@ -9,6 +9,7 @@ public class CreateUpdateContactRequest {
     private String last_name;
     private String email;
     private String phone_number;
+    private String profile_pic;
     private boolean favorite;
 
     public String getFirst_name() {
@@ -41,6 +42,14 @@ public class CreateUpdateContactRequest {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
+    }
+
+    public String getProfile_pic() {
+        return profile_pic;
+    }
+
+    public void setProfile_pic(String profile_pic) {
+        this.profile_pic = profile_pic;
     }
 
     public boolean isFavorite() {

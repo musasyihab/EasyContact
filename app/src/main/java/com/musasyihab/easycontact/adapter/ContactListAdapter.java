@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.musasyihab.easycontact.R;
 import com.musasyihab.easycontact.data.model.ContactModel;
+import com.musasyihab.easycontact.util.CircleTransform;
 import com.musasyihab.easycontact.util.Constants;
 import com.musasyihab.easycontact.util.ContactSortComparator;
 
@@ -73,7 +74,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             }
         }
 
-        String avatar = contact.getProfilePic();
+        String avatar = contact.getNormalizeProfilePic();
 
         if(avatar!=null && !avatar.isEmpty() && !avatar.equals(Constants.EMPTY_AVATAR_URL)){
             holder.contactAvaImg.setVisibility(View.VISIBLE);
@@ -83,6 +84,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                     .load(avatar)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
+                    .transform(new CircleTransform(context))
                     .into(holder.contactAvaImg);
         } else {
             holder.contactAvaImg.setVisibility(View.GONE);

@@ -2,8 +2,10 @@ package com.musasyihab.easycontact.data.repository;
 
 import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.network.request.CreateUpdateContactRequest;
+import com.musasyihab.easycontact.network.request.ImageUploadRequest;
 import com.musasyihab.easycontact.network.response.ContactResponse;
 import com.musasyihab.easycontact.network.response.ContactSimpleResponse;
+import com.musasyihab.easycontact.network.response.ImageUploadResponse;
 
 import java.util.List;
 
@@ -36,5 +38,7 @@ public interface ContactRepository {
     Observable<Void> deleteContact(int id);
 
     boolean checkContactExist(int id);
+
+    Observable<ImageUploadResponse> uploadImage(ImageUploadRequest request);
 
 }
