@@ -44,7 +44,7 @@ public class ContactFormPresenter implements ContactFormActivityVP.Presenter {
             contactRepository.updateContactDetail(request, contactId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(result -> {}, throwable -> {
+                    .subscribe(result -> view.updateData(result), throwable -> {
                         throwable.printStackTrace();
                         view.showSnackbar(throwable.getMessage());
                         view.hideLoadingDialog();
@@ -63,7 +63,7 @@ public class ContactFormPresenter implements ContactFormActivityVP.Presenter {
             contactRepository.createNewContact(request)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(result -> {}, throwable -> {
+                    .subscribe(result -> view.updateData(result), throwable -> {
                         throwable.printStackTrace();
                         view.showSnackbar(throwable.getMessage());
                         view.hideLoadingDialog();

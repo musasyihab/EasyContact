@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.musasyihab.easycontact.BaseActivity;
 import com.musasyihab.easycontact.R;
+import com.musasyihab.easycontact.contactdetail.ContactDetailActivity;
 import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.network.request.CreateUpdateContactRequest;
 import com.musasyihab.easycontact.network.request.ImageUploadRequest;
@@ -258,7 +259,7 @@ public class ContactFormActivity extends BaseActivity implements ContactFormActi
 
         if(avatarURL!=null){
             request.setProfile_pic(avatarURL);
-        } else {
+        } else if(mContact!=null) {
             request.setProfile_pic(mContact.getProfilePic());
         }
 
@@ -287,6 +288,11 @@ public class ContactFormActivity extends BaseActivity implements ContactFormActi
     @Override
     public void finishActivity() {
         finish();
+        if(mContactId==-1){
+            Intent detailIntent = new Intent(this, ContactDetailActivity.class);
+            detailIntent.putExtra(ContactDetailActivity.CONTACT_ID, mContact.getId());
+            startActivity(detailIntent);
+        }
     }
 
     @Override
