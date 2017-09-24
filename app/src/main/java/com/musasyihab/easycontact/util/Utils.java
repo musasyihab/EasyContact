@@ -129,12 +129,5 @@ public class Utils {
 
         return sObj1.equals(sObj2);
 
-        /*
-        if(obj1 instanceof String){
-            System.out.println("obj1: "+(String) obj1 + " | obj2: "+(String) obj2);
-        }
-        System.out.println("return: "+(obj1 == null ? obj2 == null : obj1.equals(obj2)));
-        return (obj1 == null ? obj2 == null : obj1.equals(obj2));
-        */
     }
 }

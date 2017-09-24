@@ -207,6 +207,12 @@ public class ContactDetailActivity extends BaseActivity implements ContactDetail
                 break;
             case R.id.action_contact_share:
                 // share contact
+                String msgBody = mContact.getFullname()+"\n"+mContact.getPhoneNumber()+"\n"+mContact.getEmail();
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mContact.getFullname());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, msgBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Contact"));
                 break;
             case R.id.action_contact_delete:
                 // delete contact
