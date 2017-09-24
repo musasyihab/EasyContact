@@ -15,6 +15,18 @@ public class ContactResponse {
     private String created_at;
     private String updated_at;
 
+    public ContactResponse(int id, String first_name, String last_name, String email, String phone_number, String profile_pic, boolean favorite, String created_at, String updated_at) {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.profile_pic = profile_pic;
+        this.favorite = favorite;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+
     public int getId() {
         return id;
     }

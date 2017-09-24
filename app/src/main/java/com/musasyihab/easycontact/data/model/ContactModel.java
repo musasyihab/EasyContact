@@ -41,6 +41,22 @@ public class ContactModel {
     @DatabaseField(columnName = UPDATED_AT)
     private Date updatedAt;
 
+    public ContactModel() {
+
+    }
+
+    public ContactModel(int id, String firstName, String lastName, String profilePic, String email, String phoneNumber, boolean favorite, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePic = profilePic;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.favorite = favorite;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public int getId() {
         return id;
     }

@@ -12,6 +12,15 @@ public class ContactSimpleResponse {
     private boolean favorite;
     private String url;
 
+    public ContactSimpleResponse(int id, String first_name, String last_name, String profile_pic, boolean favorite, String url) {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.profile_pic = profile_pic;
+        this.favorite = favorite;
+        this.url = url;
+    }
+
     public int getId() {
         return id;
     }

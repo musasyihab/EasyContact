@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.google.gson.Gson;
 import com.musasyihab.easycontact.data.model.ContactModel;
 import com.musasyihab.easycontact.network.response.ContactResponse;
 import com.musasyihab.easycontact.network.response.ContactSimpleResponse;
@@ -28,7 +29,10 @@ public class Utils {
         model.setLastName(response.getLast_name());
         model.setEmail(response.getEmail());
         model.setPhoneNumber(response.getPhone_number());
-        model.setProfilePic(Constants.HOST_URL+response.getProfile_pic());
+        if(response.getProfile_pic()!=null && !response.getProfile_pic().startsWith("http"))
+            model.setProfilePic(Constants.HOST_URL+response.getProfile_pic());
+        else
+            model.setProfilePic(response.getProfile_pic());
         model.setFavorite(response.isFavorite());
         model.setCreatedAt(getDateFromAPI(response.getCreated_at()));
         model.setUpdatedAt(getDateFromAPI(response.getUpdated_at()));
@@ -41,13 +45,19 @@ public class Utils {
         model.setId(response.getId());
         model.setFirstName(response.getFirst_name());
         model.setLastName(response.getLast_name());
-        model.setProfilePic(Constants.HOST_URL+response.getProfile_pic());
+        if(response.getProfile_pic()!=null && !response.getProfile_pic().startsWith("http"))
+            model.setProfilePic(Constants.HOST_URL+response.getProfile_pic());
+        else
+            model.setProfilePic(response.getProfile_pic());
         model.setFavorite(response.isFavorite());
 
         return model;
     }
 
     public static Date getDateFromAPI(String date) {
+        if(date==null || date.isEmpty()){
+            return null;
+        }
         SimpleDateFormat formatter = new SimpleDateFormat(Constants.API_DATE_FORMAT);
         Date formatDate = new Date();
         try {
@@ -73,10 +83,10 @@ public class Utils {
 
     public static String normalizeAvatarUrl(String url){
 
-        if(url.contains("?")){
+        if(url!=null && url.contains("?")){
             String[] split = url.split("\\?");
             url = split[0];
-            url = url.replace("http://gojek-contacts-app.herokuapp.com","");
+//            url = url.replace("http://gojek-contacts-app.herokuapp.com","");
 
         }
         return url;
@@ -107,5 +117,24 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static boolean compareObject(Object obj1, Object obj2) {
+        if(obj1 == null || obj2 == null){
+            return  obj1 == obj1;
+        }
+
+        String sObj1 = new Gson().toJson(obj1);
+        String sObj2 = new Gson().toJson(obj2);
+
+        return sObj1.equals(sObj2);
+
+        /*
+        if(obj1 instanceof String){
+            System.out.println("obj1: "+(String) obj1 + " | obj2: "+(String) obj2);
+        }
+        System.out.println("return: "+(obj1 == null ? obj2 == null : obj1.equals(obj2)));
+        return (obj1 == null ? obj2 == null : obj1.equals(obj2));
+        */
     }
 }

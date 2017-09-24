@@ -24,7 +24,6 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -109,8 +108,7 @@ public class ContactRepositoryImpl implements ContactRepository {
             }
         };
         return Observable.create(onSubscribe)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -129,8 +127,7 @@ public class ContactRepositoryImpl implements ContactRepository {
             }
         };
         return Observable.create(onSubscribe)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     @Override

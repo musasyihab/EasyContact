@@ -8,7 +8,7 @@ import com.musasyihab.easycontact.data.model.ContactModel;
 
 public class ContactDetailActivityVP {
 
-    interface View {
+    public interface View {
 
         void showLoading();
 
@@ -26,7 +26,7 @@ public class ContactDetailActivityVP {
 
     }
 
-    interface Presenter {
+    public interface Presenter {
 
         void loadData(int contactId);
 

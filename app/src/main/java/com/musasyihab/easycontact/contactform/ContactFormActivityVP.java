@@ -11,7 +11,7 @@ import com.musasyihab.easycontact.network.request.ImageUploadRequest;
 
 public class ContactFormActivityVP {
 
-    interface View {
+    public interface View {
 
         void showLoadingDialog(String msg);
 
@@ -29,7 +29,7 @@ public class ContactFormActivityVP {
 
     }
 
-    interface Presenter {
+    public interface Presenter {
 
         void loadData(int contactId);
 
